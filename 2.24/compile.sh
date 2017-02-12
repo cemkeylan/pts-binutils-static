@@ -83,7 +83,7 @@ function build() {
     (make -C binutils-2.24/builddir-static/opcodes CCLD='$(CC) -all-static') || exit "$?"
     (make -C binutils-2.24/builddir-static configure-binutils)  # E.g. objcopy.
     (make -C binutils-2.24/builddir-static/binutils CCLD='$(CC) -all-static' SUBDIRS=) || exit "$?"
-    ls -ld binutils-2.24/builddir-static/{addr2line,ar,elfedit,objcopy,objdump,ranlib,readelf,size,strings} || exit "$?"
+    ls -ld binutils-2.24/builddir-static/binutils/{addr2line,ar,elfedit,objcopy,objdump,ranlib,readelf,size,strings} || exit "$?"
 
     (make -C binutils-2.24/builddir-static configure-gas) || exit "$?"
     (make -C binutils-2.24/builddir-static/gas CCLD='$(CC) -all-static') || exit "$?"
