@@ -62,6 +62,7 @@ function build() {
             --disable-nls \
             --disable-shared \
             --disable-plugins \
+            --with-sysroot \
             --enable-gold \
             --enable-targets=i386-linux-gnu,x86_64-linux-gnu,x86_64-linux-gnux32,x86_64-pep \
     )
