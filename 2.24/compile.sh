@@ -141,6 +141,7 @@ for OFLAGS in -Os -O2; do
     mv pts-binutils-static-bin-"$OSUFFIX"-2.24 ../
   fi
 done
+rm -rf binutils-2.24
 
 : compile.sh OK.
 
