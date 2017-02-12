@@ -27,6 +27,7 @@ type -p g++ || exit "$?"  # Needed for gold.
 type -p bison || exit "$?"  # Needed for gold.
 type -p strip || exit "$?"  # Needed for gold.
 type -p 7z || exit "$?"
+type -p perl || exit "$?"
 
 OFLAGS="${OFLAGS:--Os}"
 
@@ -46,7 +47,11 @@ function build() {
     tar xjf binutils-2.24.tar.bz2 || exit "$?"
     gzip -cd binutils_2.24-5ubuntu14.1.diff.gz | patch -p0 || exit "$?"
     (cd binutils-2.24 && while read F; do test "${F#\#}" = "$F" || continue; test "$F" || continue; patch -p1 <debian/patches/"$F" || exit "$?"; done <debian/patches/series) || exit "$?"
-    #echo 'info all: ;' >binutils-2.24/bfd/doc/Makefile.in
+    # `echo $(HOST_CONFIGARGS)' removes the single quotes, which makes
+    # gold/configure fail if --with-pkgversion contains a dash. We fix that
+    # by removing the echo.
+    test -f binutils-2.24/Makefile.in || exit "$?"  # perl doesn't fail in this case.
+    perl -pi~ -e's@\$\$\(echo \$\(HOST_CONFIGARGS\).*?\)@\$\(HOST_CONFIGARGS\)@g' binutils-2.24/Makefile.in || exit "$?"
   fi
 
   if true; then
